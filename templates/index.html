@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Recommendation</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 50px;
+            background-color: #343a40; /* Dark background color */
+            color: #fff; /* Text color */
+        }
+        .container {
+            max-width: 350px; /* Adjusted width */
+            margin: auto;
+        }
+        .form-group label {
+            font-weight: bold;
+        }
+        .result-header {
+            margin-top: 30px;
+        }
+        .list-group-item {
+            background-color: #495057; /* Darker list item background color */
+            border-color: #343a40; /* Dark border color */
+        }
+        .list-group-item a {
+            color: #fff; /* Link color */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Movie Recommendation System</h1>
+        <form action="/" method="post">
+            <div class="form-group">
+                <label for="movie_name">Enter your favourite movie name:</label>
+                <input type="text" id="movie_name" name="movie_name" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block" style="background-color: #495057; border-color:#495057">Get Recommendations</button>
+        </form>
+
+        {% if movie_name %}
+            <div class="result-header">
+                <h2>Based on your favourite movie: {{ movie_name }}</h2>
+                {% if not_found %}
+                    <div class="alert alert-warning" role="alert">
+                        No similar movies found. Please try with another movie.
+                    </div>
+                {% else %}
+                    <h3>Movies recommended for you:</h3>
+                    <ul class="list-group">
+                        {% for movie in movies %}
+                            <li class="list-group-item">
+                                <a href="https://www.google.com/search?q={{ movie|urlencode }}" target="_blank">{{ movie }}</a> <!-- Link to Google search results -->
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
